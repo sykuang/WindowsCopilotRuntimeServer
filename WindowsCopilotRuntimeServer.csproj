@@ -1,0 +1,59 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <Nullable>enable</Nullable>
+        <ApplicationManifest>app.manifest</ApplicationManifest>
+        <TargetFramework>net8.0-windows10.0.22621.0</TargetFramework>
+        <TargetPlatformMinVersion>10.0.22621.0</TargetPlatformMinVersion>
+        <Platforms>x86;x64;ARM64</Platforms>
+        <ApplicationIcon>Assets\WindowCopilotRuntimeServer.icon</ApplicationIcon>
+        <RuntimeIdentifiers Condition="$([MSBuild]::GetTargetFrameworkVersion('$(TargetFramework)')) >= 8">win-x86;win-x64;win-arm64</RuntimeIdentifiers>
+        <RuntimeIdentifiers Condition="$([MSBuild]::GetTargetFrameworkVersion('$(TargetFramework)')) &lt; 8">win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
+        <AppxBundle>Always</AppxBundle>
+        <PublishProfile>win-$(Platform).pubxml</PublishProfile>
+        <AppxBundlePlatforms>arm64</AppxBundlePlatforms>
+        <EnableMsixTooling>true</EnableMsixTooling>
+        <GenerateAppInstallerFile>True</GenerateAppInstallerFile>
+        <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
+        <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
+        <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+        <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
+        <GenerateTestArtifacts>True</GenerateTestArtifacts>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <PublishTrimmed>false</PublishTrimmed>
+        <PackageCertificateKeyFile>WindowsCopilotRuntimeServer_TemporaryKey.pfx</PackageCertificateKeyFile>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Windows.SDK.BuildTools"
+                          Version="10.0.22621.756" />
+        <Manifest Include="$(ApplicationManifest)" />
+        <PackageReference Include="Microsoft.WindowsAppSDK"
+                          Version="1.7.250127003-experimental3" />
+        <PackageReference Include="System.Net.Http"
+                          Version="4.3.4" />
+        <PackageReference Include="System.Private.Uri"
+                          Version="4.3.2" />
+        <PackageReference Include="System.Text.RegularExpressions"
+                          Version="4.3.1" />
+        <PackageReference Include="Microsoft.Extensions.Logging"
+                          Version="8.0.1" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi"
+                          Version="8.0.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore"
+                          Version="6.5.0" />
+    </ItemGroup>
+    <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
+        <ProjectCapability Include="Msix" />
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="Microsoft.Windows.SemanticSearch.Projection">
+            <HintPath>Microsoft.Windows.SemanticSearch.Projection.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+    <!-- Defining the "HasPackageAndPublishMenuAddedByProject" property here allows the Solution
+    Explorer "Package and Publish" context menu entry to be enabled for this project even if
+    the Windows App SDK Nuget package has not yet been restored. -->
+    <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
+        <HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>
+    </PropertyGroup>
+</Project>

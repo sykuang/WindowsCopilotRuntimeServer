@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "WindowsCopilotRuntimeServer (Package)": {
+      "commandName": "MsixPackage",
+      "nativeDebugging": true
+    },
+    "WindowsCopilotRuntimeServer (Unpackaged)": {
+      "commandName": "Project",
+      "useConsole": true
+    }
+  }
+}
