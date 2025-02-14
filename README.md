@@ -2,31 +2,30 @@
 
 A REST API server that provides OpenAI-compatible endpoints for Windows Copilot+ PC, allowing you to use local AI models through standard OpenAI client libraries.
 
-## Features
+## Quick Installation
 
-- OpenAI-compatible REST API
-- Support for chat completions
-- Local model inference using Windows Copilot Runtime
-- Configurable parameters (temperature, top_p, top_k)
-- CORS support for web applications
+1. Download the latest release:
+   - [WindowsCopilotRuntimeServer.zip](https://github.com/sykuang/WindowsCopilotRuntimeServer/releases/download/v0.01/WindowsCopilotRuntimeServer.zip)
+
+2. Extract the ZIP file to your preferred location
+
+3. Run PowerShell as Administrator and execute:
+```powershell
+cd <extraction-path>
+.\Install.ps1
+```
+
+4. Start the server from Start Menu and search for "Windows Copilot Runtime Server"
 
 ## Prerequisites
 
 - Windows 11 (Build 22621 or later)
-- .NET 8.0
 - Windows App SDK 1.7-experimental3
 - Windows Copilot Runtime
 
-## Quick Start
+## Usage with OpenAI Clients
 
-1. Build and run the server:
-```bash
-dotnet run
-```
-
-2. The server will start at `http://localhost:5001`
-
-3. Use with OpenAI clients:
+### Python with OpenAI Client
 ```python
 from openai import OpenAI
 
@@ -36,15 +35,56 @@ client = OpenAI(
 )
 
 chat_completion = client.chat.completions.create(
-    model="windows-local",
+    model="PhiSlica",  # or use "windows-local"
     messages=[{
         "role": "user",
         "content": "What is the golden ratio?"
     }],
-    temperature=0.7
+    temperature=0.7,
+    top_p=0.9,
+    top_k=40
 )
 
 print(chat_completion.choices[0].message.content)
+```
+
+### PowerShell
+```powershell
+# Simple request using Invoke-RestMethod
+$headers = @{
+    "Content-Type" = "application/json"
+}
+
+$body = @{
+    model = "PhiSlica"
+    messages = @(
+        @{
+            role = "user"
+            content = "What is the golden ratio?"
+        }
+    )
+    temperature = 0.7
+    top_p = 0.9
+    top_k = 40
+} | ConvertTo-Json
+
+$response = Invoke-RestMethod -Method Post `
+    -Uri "http://localhost:5001/v1/chat/completions" `
+    -Headers $headers `
+    -Body $body
+
+$response.choices[0].message.content
+
+# Stream response using curl
+curl -X POST "http://localhost:5001/v1/chat/completions" `
+     -H "Content-Type: application/json" `
+     -d '{
+           "model": "PhiSlica",
+           "messages": [{"role": "user", "content": "What is the golden ratio?"}],
+           "temperature": 0.7,
+           "top_p": 0.9,
+           "top_k": 40
+         }'
 ```
 
 ## API Reference
@@ -56,7 +96,7 @@ print(chat_completion.choices[0].message.content)
 Request body:
 ```json
 {
-    "model": "windows-local",
+    "model": "PhiSlica",
     "messages": [
         {
             "role": "user",
@@ -69,12 +109,21 @@ Request body:
 }
 ```
 
-## Development
+## Features
 
-- Written in C# using ASP.NET Core
-- Uses Windows App SDK for AI features
+- OpenAI-compatible REST API
+- Local model inference using Windows Copilot Runtime
+- CORS support for web applications
+- Swagger UI at `/swagger`
 - JSON source generation for optimal performance
-- Swagger UI available at `/swagger`
+
+## Troubleshooting
+
+If you encounter any issues:
+1. Make sure Windows App SDK 1.7-experimental3 is installed
+2. Check if Windows Copilot Runtime is properly installed
+3. Run PowerShell as Administrator when executing Install.ps1
+4. Check the logs in the application directory
 
 ## License
 
