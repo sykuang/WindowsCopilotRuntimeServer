@@ -29,6 +29,7 @@ public class ChatCompletionRequest
     public bool Stream { get; set; } = false;
 
     [JsonPropertyName("max_tokens")]
+    [JsonIgnore]
     public int? MaxTokens { get; set; }
 
     [JsonPropertyName("presence_penalty")]
@@ -36,14 +37,38 @@ public class ChatCompletionRequest
 
     [JsonPropertyName("frequency_penalty")]
     public float FrequencyPenalty { get; set; } = 0.0f;
+
+    [JsonPropertyName("tools")]
+    public List<Tool> Tools { get; set; } = new();
+
+    [JsonIgnore]
+    public bool HasToolCalls => Tools?.Any() == true;
 }
 
 public class Message
 {
+    [JsonPropertyName("role")]
     public string Role { get; set; } = "";
-    public string Content { get; set; } = "";
+
+    [JsonPropertyName("content")]
+    public string Content { get; set; }
+
+
 }
 
+public class ResponseMessage
+{
+    [JsonPropertyName("role")]
+    public string Role { get; set; } = "";
+
+    [JsonPropertyName("content")]
+    public string Content { get; set; }
+
+    [JsonPropertyName("tool_calls")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+    public List<ToolCall> ToolCalls { get; set; } = null;
+
+}
 public class ChatCompletionResponse
 {
     [JsonPropertyName("id")]
@@ -68,7 +93,7 @@ public class ChatCompletionResponse
 public class Choice
 {
     public int Index { get; set; }
-    public Message Message { get; set; } = new();
+    public ResponseMessage Message { get; set; } = new();
     public string FinishReason { get; set; } = "stop";
 }
 
