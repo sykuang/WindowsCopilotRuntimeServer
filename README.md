@@ -19,9 +19,7 @@ cd <extraction-path>
 
 ## Prerequisites
 
-- Windows 11 (Build 22621 or later)
-- Windows App SDK 1.7-experimental3
-- Windows Copilot Runtime
+- Windows 11 Insider Preview Build 26120.3073 (Dev and Beta Channels) or later must be installed on your device.
 
 ## Usage with OpenAI Clients
 
