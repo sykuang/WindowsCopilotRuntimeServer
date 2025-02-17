@@ -5,7 +5,7 @@ A REST API server that provides OpenAI-compatible endpoints for Windows Copilot+
 ## Quick Installation
 
 1. Download the latest release:
-   - [WindowsCopilotRuntimeServer.zip](https://github.com/sykuang/WindowsCopilotRuntimeServer/releases/download/v0.01/WindowsCopilotRuntimeServer.zip)
+   - [WindowsCopilotRuntimeServer.zip](https://github.com/sykuang/WindowsCopilotRuntimeServer/releases/tag/v0.0.0.1)
 
 2. Extract the ZIP file to your preferred location
 
