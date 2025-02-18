@@ -5,7 +5,7 @@ A REST API server that provides OpenAI-compatible endpoints for Windows Copilot+
 ## Quick Installation
 
 1. Download the latest release:
-   - [WindowsCopilotRuntimeServer.zip](https://github.com/sykuang/WindowsCopilotRuntimeServer/releases/tag/v0.0.0.1)
+   - [WindowsCopilotRuntimeServer.zip](https://github.com/sykuang/WindowsCopilotRuntimeServer/releases)
 
 2. Extract the ZIP file to your preferred location
 
@@ -25,19 +25,17 @@ cd <extraction-path>
 
 | Feature | Status | Notes |
 |---------|--------|-------|
-| Chat Completions | ✅ | Basic chat completion supported |
-| Tool Calling | ✅ | Similar to OpenAI function calling |
+| Chat Completions | ✅ | Full support with OpenAI compatibility |
+| Tool Calling | ✅ | Supports OpenAI function calling format |
 | Vision | ❌ | Planned |
-| Streaming | ❌ | Planned |
+| Streaming | ✅ | Supports SSE with token-by-token streaming |
 | Custom Model Loading | ❌ | Not supported by runtime |
-| System Messages | ✅ | In chat context |
+| System Messages | ✅ | Supported in chat context |
 | Temperature | ✅ | Range 0-1 |
 | Top P | ✅ | Range 0-1 |
-| Top K | ✅ | Windows Copilot specific |
+| Top K | ✅ | Windows Copilot specific parameter |
 | Max Tokens | ❌ | Not supported by runtime |
 | Stop Sequences | ❌ | Not supported by runtime |
-| Presence Penalty | ❌ | Not supported |
-| Frequency Penalty | ❌ | Not supported |
 
 ## Usage with OpenAI Clients
 
