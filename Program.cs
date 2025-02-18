@@ -5,9 +5,14 @@ using Microsoft.Windows.AI.Generative;
 using Microsoft.Extensions.Logging;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Server.Kestrel.Core;  // Add this line
 using WindowsCopilotRuntimeServer;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Configure Kestrel and IIS
+builder.Services.Configure<IISServerOptions>(options => options.AllowSynchronousIO = true);
+builder.Services.Configure<KestrelServerOptions>(options => options.AllowSynchronousIO = true);
 
 builder.Services.AddHttpClient();
 

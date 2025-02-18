@@ -21,6 +21,24 @@ cd <extraction-path>
 
 - Windows 11 Insider Preview Build 26120.3073 (Dev and Beta Channels) or later must be installed on your device.
 
+## API Support Status
+
+| Feature | Status | Notes |
+|---------|--------|-------|
+| Chat Completions | ✅ | Basic chat completion supported |
+| Tool Calling | ✅ | Similar to OpenAI function calling |
+| Vision | ❌ | Planned |
+| Streaming | ❌ | Planned |
+| Custom Model Loading | ❌ | Not supported by runtime |
+| System Messages | ✅ | In chat context |
+| Temperature | ✅ | Range 0-1 |
+| Top P | ✅ | Range 0-1 |
+| Top K | ✅ | Windows Copilot specific |
+| Max Tokens | ❌ | Not supported by runtime |
+| Stop Sequences | ❌ | Not supported by runtime |
+| Presence Penalty | ❌ | Not supported |
+| Frequency Penalty | ❌ | Not supported |
+
 ## Usage with OpenAI Clients
 
 ### Python with OpenAI Client
@@ -83,6 +101,38 @@ curl -X POST "http://localhost:5001/v1/chat/completions" `
            "top_p": 0.9,
            "top_k": 40
          }'
+```
+
+### Streaming Support
+
+```python
+from openai import OpenAI
+
+client = OpenAI(
+    base_url="http://localhost:5001/v1",
+    api_key="not-needed"
+)
+
+stream = client.chat.completions.create(
+    model="PhiSlica",
+    messages=[{"role": "user", "content": "Write a story about a cat"}],
+    stream=True  # Enable streaming
+)
+
+for chunk in stream:
+    if chunk.choices[0].delta.content:
+        print(chunk.choices[0].delta.content, end="")
+```
+
+Using curl:
+```bash
+curl http://localhost:5001/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "PhiSlica",
+    "messages": [{"role": "user", "content": "Write a story about a cat"}],
+    "stream": true
+  }'
 ```
 
 ## API Reference
