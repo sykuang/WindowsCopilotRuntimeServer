@@ -10,7 +10,7 @@
   <Identity
     Name="WindowsCopilotRuntimeServer"
     Publisher="CN=kenkuang"
-    Version="0.0.0.1" />
+    Version="0.0.0.2" />
 
   <mp:PhoneIdentity PhoneProductId="c5b7260c-afed-4f8b-b058-d26d9b43bbac" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
