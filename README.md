@@ -21,6 +21,11 @@ cd <extraction-path>
 
 - Windows 11 Insider Preview Build 26120.3073 (Dev and Beta Channels) or later must be installed on your device.
 
+### For Developers
+If you're planning to build the project from source:
+- [MSIX Packaging Tool](https://www.microsoft.com/en-us/p/msix-packaging-tool/9n5lw3jbcxkf) is required for packaging
+- Build and use the WindowsCopilotRuntimeServer (Package) project instead of the non-packaged version due to experimental Windows App SDK dependencies
+
 ## API Support Status
 
 | Feature | Status | Notes |
